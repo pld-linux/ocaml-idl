@@ -8,7 +8,9 @@ Group:		Libraries
 Vendor:		Xavier Leroy <Xavier.Leroy@inria.fr>
 URL:		http://caml.inria.fr/camlidl/
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
+# Source0-md5:	03e50a7468e87c2dabe20eebbf64c51f
 Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.doc.html.tar.gz
+# Source1-md5:	bed79a103cf3f9929737037226b1f5e6
 BuildRequires:	ocaml >= 3.04-7
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
