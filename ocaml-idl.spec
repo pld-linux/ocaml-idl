@@ -119,4 +119,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/ocaml/idl/*.cm[ixa]*
 %{_libdir}/ocaml/idl/*.a
 %{_examplesdir}/%{name}-%{version}
-%{_libdir}/ocaml/site-lib/idl
+%{_libdir}/ocaml/site-lib/camlidl
