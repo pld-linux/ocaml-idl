@@ -94,8 +94,8 @@ cp -r tests/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 # remove Windows examples
 rm -rf  $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/{comp,dispatch}
 
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/idl
-cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/idl/META <<EOF
+install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/camlidl
+cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/camlidl/META <<EOF
 requires = ""
 version = "%{version}"
 directory = "+idl"
