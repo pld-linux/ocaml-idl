@@ -23,13 +23,13 @@ interfacing C libraries with Caml programs. It can also be used to
 interface Caml programs with other languages, as long as those
 languages have a well-defined C interface.
 
-This package contains files needed to run bytecode executables using 
+This package contains files needed to run bytecode executables using
 this library.
 
 %description -l pl
 Camlidl jest generatorem kodu ³±cz±cego C z OCamlem. Pozwala on na
 automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane
-z OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej 
+z OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
 niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C
 z OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami
 je¶li tylko maj± one dobrze zdefiniowany interfejs C.
@@ -52,18 +52,18 @@ interfacing C libraries with Caml programs. It can also be used to
 interface Caml programs with other languages, as long as those
 languages have a well-defined C interface.
 
-This package contains files needed to develop OCaml programs using 
+This package contains files needed to develop OCaml programs using
 this library.
 
 %description devel -l pl
 Camlidl jest generatorem kodu ³±cz±cego C z OCamlem. Pozwala on na
 automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane
-z OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej 
+z OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
 niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C
 z OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami
 je¶li tylko maj± one dobrze zdefiniowany interfejs C.
 
-Pakiet ten zawiera pliki niezbêdne do tworzenia programów u¿ywaj±cych 
+Pakiet ten zawiera pliki niezbêdne do tworzenia programów u¿ywaj±cych
 tej biblioteki.
 
 %prep
