@@ -2,7 +2,7 @@ Summary:	IDL binding for OCaml
 Summary(pl):	Wi±zania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.04
-Release:	1
+Release:	2
 License:	QPL
 Group:		Libraries
 Vendor:		Xavier Leroy <Xavier.Leroy@inria.fr>
@@ -11,7 +11,7 @@ Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
 # Source0-md5:	03e50a7468e87c2dabe20eebbf64c51f
 Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.doc.html.tar.gz
 # Source1-md5:	bed79a103cf3f9929737037226b1f5e6
-BuildRequires:	ocaml >= 3.04-7
+BuildRequires:	ocaml >= 3.06
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -83,9 +83,9 @@ ocamlmklib -o com lib/*.cm[xo] runtime/*.o
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/ocaml/idl}
-install lib/*.cm[ix] *.cm* *.a dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/idl
-(cd $RPM_BUILD_ROOT%{_libdir}/ocaml && ln -s idl/dll*.so .)
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/ocaml/{idl,stublibs}}
+install lib/*.cm[ix] *.cm* *.a $RPM_BUILD_ROOT%{_libdir}/ocaml/idl
+install dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 
 install compiler/camlidl $RPM_BUILD_ROOT%{_bindir}
 
@@ -110,12 +110,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %dir %{_libdir}/ocaml/idl
-%attr(755,root,root) %{_libdir}/ocaml/idl/*.so
-%{_libdir}/ocaml/*.so
+%attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
 
 %files devel
 %defattr(644,root,root,755)
 %doc htmlman LICENSE README Changes
+%attr(755,root,root) %{_bindir}/camlidl
 %{_libdir}/ocaml/idl/*.cm[ixa]*
 %{_libdir}/ocaml/idl/*.a
 %{_examplesdir}/%{name}-%{version}
