@@ -1,16 +1,16 @@
 Summary:	IDL binding for OCaml
 Summary(pl):	Wi±zania IDL dla OCamla
 Name:		ocaml-idl
-Version:	1.04
+Version:	1.05
 Release:	4
 License:	QPL
 Group:		Libraries
 Vendor:		Xavier Leroy <Xavier.Leroy@inria.fr>
 URL:		http://caml.inria.fr/camlidl/
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
-# Source0-md5:	03e50a7468e87c2dabe20eebbf64c51f
+# Source0-md5:	4cfb863bc3cbdc1af2502042c45cc675
 Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.doc.html.tar.gz
-# Source1-md5:	bed79a103cf3f9929737037226b1f5e6
+# Source1-md5:	b7c7dad3ba62ddcc0f687bdebe295126
 BuildRequires:	ocaml >= 3.07
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
