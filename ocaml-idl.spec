@@ -2,7 +2,7 @@ Summary:	IDL binding for OCaml
 Summary(pl):	Wi±zania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.05
-Release:	2
+Release:	3
 License:	QPL
 Vendor:		Xavier Leroy <Xavier.Leroy@inria.fr>
 Group:		Libraries
