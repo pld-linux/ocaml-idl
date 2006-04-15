@@ -1,23 +1,23 @@
+%define		ocaml_ver	3.09.1
 Summary:	IDL binding for OCaml
 Summary(pl):	Wi±zania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.05
-Release:	3
+Release:	4
 License:	QPL
-Vendor:		Xavier Leroy <Xavier.Leroy@inria.fr>
 Group:		Libraries
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
 # Source0-md5:	4cfb863bc3cbdc1af2502042c45cc675
 Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.doc.html.tar.gz
 # Source1-md5:	b7c7dad3ba62ddcc0f687bdebe295126
 URL:		http://caml.inria.fr/camlidl/
-BuildRequires:	ocaml >= 3.07
+BuildRequires:	ocaml >= %{ocaml_ver}
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Camlidl is a stub code generator for Objective Caml. It generates
-stub code for interfacing Caml with C from an IDL description of the C
+Camlidl is a stub code generator for Objective Caml. It generates stub
+code for interfacing Caml with C from an IDL description of the C
 functions. Thus, Camlidl automates the most tedious task in
 interfacing C libraries with Caml programs. It can also be used to
 interface Caml programs with other languages, as long as those
@@ -28,11 +28,11 @@ this library.
 
 %description -l pl
 Camlidl jest generatorem kodu ³±cz±cego C z OCamlem. Pozwala on na
-automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane
-z OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
-niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C
-z OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami
-je¶li tylko maj± one dobrze zdefiniowany interfejs C.
+automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane z
+OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
+niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C z
+OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami je¶li
+tylko maj± one dobrze zdefiniowany interfejs C.
 
 Pakiet ten zawiera binaria potrzebne do uruchamiania programów
 u¿ywaj±cych tej biblioteki.
@@ -45,8 +45,8 @@ Requires:	%{name} = %{version}-%{release}
 %requires_eq	ocaml
 
 %description devel
-Camlidl is a stub code generator for Objective Caml. It generates
-stub code for interfacing Caml with C from an IDL description of the C
+Camlidl is a stub code generator for Objective Caml. It generates stub
+code for interfacing Caml with C from an IDL description of the C
 functions. Thus, Camlidl automates the most tedious task in
 interfacing C libraries with Caml programs. It can also be used to
 interface Caml programs with other languages, as long as those
@@ -57,11 +57,11 @@ this library.
 
 %description devel -l pl
 Camlidl jest generatorem kodu ³±cz±cego C z OCamlem. Pozwala on na
-automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane
-z OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
-niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C
-z OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami
-je¶li tylko maj± one dobrze zdefiniowany interfejs C.
+automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane z
+OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
+niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C z
+OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami je¶li
+tylko maj± one dobrze zdefiniowany interfejs C.
 
 Pakiet ten zawiera pliki niezbêdne do tworzenia programów u¿ywaj±cych
 tej biblioteki.
@@ -77,7 +77,8 @@ tej biblioteki.
 %build
 rm -f config/Makefile
 cp config/Makefile.unix config/Makefile
-%{__make} CFLAGS="%{rpmcflags} -fPIC"
+%{__make} -j1 \
+	CFLAGS="%{rpmcflags} -fPIC"
 ocamlmklib -o com lib/*.cm[xo] runtime/*.o
 
 %install
