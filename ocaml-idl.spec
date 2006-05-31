@@ -1,9 +1,9 @@
-%define		ocaml_ver	1:3.09.1
+%define		ocaml_ver	1:3.09.2
 Summary:	IDL binding for OCaml
 Summary(pl):	Wi±zania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.05
-Release:	5
+Release:	6
 License:	QPL
 Group:		Libraries
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
