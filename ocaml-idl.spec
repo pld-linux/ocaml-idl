@@ -1,6 +1,6 @@
 %define		ocaml_ver	1:3.09.2
 Summary:	IDL binding for OCaml
-Summary(pl):	Wi±zania IDL dla OCamla
+Summary(pl.UTF-8):   WiÄ…zania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.05
 Release:	6
@@ -26,20 +26,20 @@ languages have a well-defined C interface.
 This package contains files needed to run bytecode executables using
 this library.
 
-%description -l pl
-Camlidl jest generatorem kodu ³±cz±cego C z OCamlem. Pozwala on na
-automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane z
-OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
-niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C z
-OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami je¶li
-tylko maj± one dobrze zdefiniowany interfejs C.
+%description -l pl.UTF-8
+Camlidl jest generatorem kodu Å‚Ä…czÄ…cego C z OCamlem. Pozwala on na
+automatyczne tworzenie funkcji, ktÃ³re bÄ™dÄ… mogÅ‚y byÄ‡ wywoÅ‚ywane z
+OCamla na podstawie opisu IDL. Automatyzuje wiÄ™c najbardziej
+niewdziÄ™czne aspekty odwoÅ‚ywania siÄ™ do bibliotek napisanych w C z
+OCamla. MoÅ¼e byÄ‡ rÃ³wnieÅ¼ uÅ¼yty do komunikacji z innymi jÄ™zykami jeÅ›li
+tylko majÄ… one dobrze zdefiniowany interfejs C.
 
-Pakiet ten zawiera binaria potrzebne do uruchamiania programów
-u¿ywaj±cych tej biblioteki.
+Pakiet ten zawiera binaria potrzebne do uruchamiania programÃ³w
+uÅ¼ywajÄ…cych tej biblioteki.
 
 %package devel
 Summary:	IDL binding for OCaml - development part
-Summary(pl):	Wi±zania IDL dla OCamla - cze¶æ programistyczna
+Summary(pl.UTF-8):   WiÄ…zania IDL dla OCamla - czeÅ›Ä‡ programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %requires_eq	ocaml
@@ -55,15 +55,15 @@ languages have a well-defined C interface.
 This package contains files needed to develop OCaml programs using
 this library.
 
-%description devel -l pl
-Camlidl jest generatorem kodu ³±cz±cego C z OCamlem. Pozwala on na
-automatyczne tworzenie funkcji, które bêd± mog³y byæ wywo³ywane z
-OCamla na podstawie opisu IDL. Automatyzuje wiêc najbardziej
-niewdziêczne aspekty odwo³ywania siê do bibliotek napisanych w C z
-OCamla. Mo¿e byæ równie¿ u¿yty do komunikacji z innymi jêzykami je¶li
-tylko maj± one dobrze zdefiniowany interfejs C.
+%description devel -l pl.UTF-8
+Camlidl jest generatorem kodu Å‚Ä…czÄ…cego C z OCamlem. Pozwala on na
+automatyczne tworzenie funkcji, ktÃ³re bÄ™dÄ… mogÅ‚y byÄ‡ wywoÅ‚ywane z
+OCamla na podstawie opisu IDL. Automatyzuje wiÄ™c najbardziej
+niewdziÄ™czne aspekty odwoÅ‚ywania siÄ™ do bibliotek napisanych w C z
+OCamla. MoÅ¼e byÄ‡ rÃ³wnieÅ¼ uÅ¼yty do komunikacji z innymi jÄ™zykami jeÅ›li
+tylko majÄ… one dobrze zdefiniowany interfejs C.
 
-Pakiet ten zawiera pliki niezbêdne do tworzenia programów u¿ywaj±cych
+Pakiet ten zawiera pliki niezbÄ™dne do tworzenia programÃ³w uÅ¼ywajÄ…cych
 tej biblioteki.
 
 %prep
