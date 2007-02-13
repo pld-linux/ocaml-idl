@@ -1,6 +1,6 @@
 %define		ocaml_ver	1:3.09.2
 Summary:	IDL binding for OCaml
-Summary(pl.UTF-8):   Wiązania IDL dla OCamla
+Summary(pl.UTF-8):	Wiązania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.05
 Release:	6
@@ -39,7 +39,7 @@ używających tej biblioteki.
 
 %package devel
 Summary:	IDL binding for OCaml - development part
-Summary(pl.UTF-8):   Wiązania IDL dla OCamla - cześć programistyczna
+Summary(pl.UTF-8):	Wiązania IDL dla OCamla - cześć programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %requires_eq	ocaml
