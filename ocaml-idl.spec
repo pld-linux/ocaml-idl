@@ -3,7 +3,7 @@ Summary:	CamlIDL is a stub code generator and COM binding for Objective Caml
 Summary(pl.UTF-8):	Wiązania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.05
-Release:	7
+Release:	8
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
