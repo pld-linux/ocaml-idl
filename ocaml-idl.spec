@@ -118,7 +118,7 @@ ln -sf ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 	OCAMLLIB=$RPM_BUILD_ROOT%{_libdir}/ocaml
 
 # fix install to subdir
-mv $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma%{?with_ocaml_opt:,cmxa,a}},idl}
+mv $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma,a%{?with_ocaml_opt:,cmxa}},idl}
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 install -p dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
@@ -151,9 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/camlidl
 %dir %{_libdir}/ocaml/idl
 %{_libdir}/ocaml/idl/*.cm[ixa]*
-%if %{with ocaml_opt}
 %{_libdir}/ocaml/idl/*.a
-%endif
 %{_libdir}/ocaml/site-lib/camlidl
 %{_libdir}/ocaml/caml
 %{_includedir}/caml/camlidlruntime.h
