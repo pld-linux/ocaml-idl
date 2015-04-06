@@ -6,13 +6,13 @@
  
 -install:
 -	cp $(INTERFACES) $(BYTELIB) $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(OCAMLLIB)
-+install: install-byte $(NATIVELIB:install-opt)
++install: install-byte $(if $(NATIVELIB),install-opt)
 +
 +install-byte:
 +	cp $(INTERFACES) $(BYTELIB) $(OCAMLLIB)
 +
 +install-opt:
-+	cp $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT))
++	cp $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(OCAMLLIB)
  	cd $(OCAMLLIB); $(RANLIB) $(NATIVELIB:.cmxa=.$(LIBEXT))
  
  .SUFFIXES: .mli .ml .cmi .cmo .cmx
