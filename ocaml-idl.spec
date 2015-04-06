@@ -1,15 +1,25 @@
+#
+# Conditional build:
+%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+
+%ifarch x32
+# not yet available on x32 (ocaml 4.02.1), remove when upstream will support it
+%undefine	with_ocaml_opt
+%endif
+
 %define		ocaml_ver	1:3.09.2
 Summary:	CamlIDL is a stub code generator and COM binding for Objective Caml
 Summary(pl.UTF-8):	Wiązania IDL dla OCamla
 Name:		ocaml-idl
 Version:	1.05
-Release:	8
+Release:	9
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
 # Source0-md5:	4cfb863bc3cbdc1af2502042c45cc675
 Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.doc.html.tar.gz
 # Source1-md5:	b7c7dad3ba62ddcc0f687bdebe295126
+Patch0:		no-opt.patch
 URL:		http://caml.inria.fr/pub/old_caml_site/camlidl/
 BuildRequires:	ocaml >= %{ocaml_ver}
 Obsoletes:	ocaml-camlidl < 1.05-3
@@ -69,6 +79,7 @@ tej biblioteki.
 
 %prep
 %setup -q -a 1 -n camlidl-%{version}
+%patch0 -p1
 
 ln -s Makefile.unix config/Makefile
 
@@ -78,9 +89,22 @@ ln -s Makefile.unix config/Makefile
 # chokes.
 
 %build
-%{__make} -j1 \
+%{__make} -j1 -C compiler \
 	CPP="%{__cc} -E -x c" \
 	CFLAGS="%{rpmcflags} -fPIC"
+
+%{__make} -j1 -C lib com.cma %{?with_ocaml_opt:com.cmxa} \
+	CPP="%{__cc} -E -x c" \
+	CFLAGS="%{rpmcflags} -fPIC"
+
+%{__make} -j1 -C runtime \
+	CPP="%{__cc} -E -x c" \
+	CFLAGS="%{rpmcflags} -fPIC"
+
+%{__make} -j1 -C tools \
+	CPP="%{__cc} -E -x c" \
+	CFLAGS="%{rpmcflags} -fPIC"
+
 ocamlmklib -o com lib/*.cm[xo] runtime/*.o
 
 %install
@@ -89,11 +113,12 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/ocaml/idl,%{_includedir}/caml}
 ln -sf ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 
 %{__make} install \
+	%{!?with_ocaml_opt:NATIVELIB=""} \
 	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
 	OCAMLLIB=$RPM_BUILD_ROOT%{_libdir}/ocaml
 
 # fix install to subdir
-mv $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma,cmxa,a},idl}
+mv $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma%{?with_ocaml_opt:,cmxa,a}},idl}
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 install -p dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
@@ -126,7 +151,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/camlidl
 %dir %{_libdir}/ocaml/idl
 %{_libdir}/ocaml/idl/*.cm[ixa]*
+%if %{with ocaml_opt}
 %{_libdir}/ocaml/idl/*.a
+%endif
 %{_libdir}/ocaml/site-lib/camlidl
 %{_libdir}/ocaml/caml
 %{_includedir}/caml/camlidlruntime.h

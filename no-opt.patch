@@ -1,0 +1,18 @@
+--- camlidl-1.05/lib/Makefile~	2002-04-22 11:50:47.000000000 +0000
++++ camlidl-1.05/lib/Makefile	2015-04-06 11:32:04.970899900 +0000
+@@ -28,8 +28,13 @@
+ $(NATIVELIB): $(NATIVEOBJS)
+ 	$(OCAMLOPT) -a -o $(NATIVELIB) $(NATIVEOBJS)
+ 
+-install:
+-	cp $(INTERFACES) $(BYTELIB) $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(OCAMLLIB)
++install: install-byte $(NATIVELIB:install-opt)
++
++install-byte:
++	cp $(INTERFACES) $(BYTELIB) $(OCAMLLIB)
++
++install-opt:
++	cp $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT))
+ 	cd $(OCAMLLIB); $(RANLIB) $(NATIVELIB:.cmxa=.$(LIBEXT))
+ 
+ .SUFFIXES: .mli .ml .cmi .cmo .cmx
