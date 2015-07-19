@@ -2,17 +2,17 @@
 # Conditional build:
 %bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
 
-%ifarch x32
-# not yet available on x32 (ocaml 4.02.1), remove when upstream will support it
+# not yet available on x32 (ocaml 4.02.1), update when upstream will support it
+%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
 %undefine	with_ocaml_opt
 %endif
 
 %define		ocaml_ver	1:3.09.2
-Summary:	CamlIDL is a stub code generator and COM binding for Objective Caml
-Summary(pl.UTF-8):	Wiązania IDL dla OCamla
+Summary:	CamlIDL - stub code generator and COM binding for OCaml
+Summary(pl.UTF-8):	CamlIDL - generator kodu zaślepek oraz wiązania COM dla OCamla
 Name:		ocaml-idl
 Version:	1.05
-Release:	10
+Release:	11
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
@@ -42,7 +42,7 @@ Camlidl jest generatorem kodu łączącego C z OCamlem. Pozwala on na
 automatyczne tworzenie funkcji, które będą mogły być wywoływane z
 OCamla na podstawie opisu IDL. Automatyzuje więc najbardziej
 niewdzięczne aspekty odwoływania się do bibliotek napisanych w C z
-OCamla. Może być również użyty do komunikacji z innymi językami jeśli
+OCamla. Może być również użyty do komunikacji z innymi językami, jeśli
 tylko mają one dobrze zdefiniowany interfejs C.
 
 Pakiet ten zawiera binaria potrzebne do uruchamiania programów
@@ -71,7 +71,7 @@ Camlidl jest generatorem kodu łączącego C z OCamlem. Pozwala on na
 automatyczne tworzenie funkcji, które będą mogły być wywoływane z
 OCamla na podstawie opisu IDL. Automatyzuje więc najbardziej
 niewdzięczne aspekty odwoływania się do bibliotek napisanych w C z
-OCamla. Może być również użyty do komunikacji z innymi językami jeśli
+OCamla. Może być również użyty do komunikacji z innymi językami, jeśli
 tylko mają one dobrze zdefiniowany interfejs C.
 
 Pakiet ten zawiera pliki niezbędne do tworzenia programów używających
@@ -118,7 +118,7 @@ ln -sf ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 	OCAMLLIB=$RPM_BUILD_ROOT%{_libdir}/ocaml
 
 # fix install to subdir
-mv $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma,a%{?with_ocaml_opt:,cmxa}},idl}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma,a%{?with_ocaml_opt:,cmxa}},idl}
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 install -p dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
@@ -143,15 +143,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
+%attr(755,root,root) %{_libdir}/ocaml/stublibs/dllcom.so
 
 %files devel
 %defattr(644,root,root,755)
 %doc htmlman LICENSE README Changes
 %attr(755,root,root) %{_bindir}/camlidl
 %dir %{_libdir}/ocaml/idl
-%{_libdir}/ocaml/idl/*.cm[ixa]*
-%{_libdir}/ocaml/idl/*.a
+%{_libdir}/ocaml/idl/com.cma
+%{_libdir}/ocaml/idl/com.cmi
+%if %{with ocaml_opt}
+%{_libdir}/ocaml/idl/com.a
+%{_libdir}/ocaml/idl/com.cmxa
+%endif
+%{_libdir}/ocaml/idl/libcamlidl.a
 %{_libdir}/ocaml/site-lib/camlidl
 %{_libdir}/ocaml/caml
 %{_includedir}/caml/camlidlruntime.h
