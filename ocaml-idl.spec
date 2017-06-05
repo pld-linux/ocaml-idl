@@ -12,7 +12,7 @@ Summary:	CamlIDL - stub code generator and COM binding for OCaml
 Summary(pl.UTF-8):	CamlIDL - generator kodu zaślepek oraz wiązania COM dla OCamla
 Name:		ocaml-idl
 Version:	1.05
-Release:	13
+Release:	14
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
 Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
@@ -20,6 +20,7 @@ Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
 Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.doc.html.tar.gz
 # Source1-md5:	b7c7dad3ba62ddcc0f687bdebe295126
 Patch0:		no-opt.patch
+Patch1:		array-stdlib.patch
 URL:		http://caml.inria.fr/pub/old_caml_site/camlidl/
 BuildRequires:	ocaml >= %{ocaml_ver}
 Obsoletes:	ocaml-camlidl < 1.05-3
@@ -80,6 +81,7 @@ tej biblioteki.
 %prep
 %setup -q -a 1 -n camlidl-%{version}
 %patch0 -p1
+%patch1 -p1
 
 ln -s Makefile.unix config/Makefile
 
