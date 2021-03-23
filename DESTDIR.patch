@@ -1,0 +1,70 @@
+From 5b8da25acd624d49609ce82bc56ef82f03dcab37 Mon Sep 17 00:00:00 2001
+From: "Richard W.M. Jones" <rjones@redhat.com>
+Date: Wed, 20 May 2020 11:31:24 +0100
+Subject: [PATCH 1/2] Allow destdir installs.
+
+make DESTDIR=/tmp/foo install
+
+You still need to create the directory structure under the destdir, so
+this is not quite a true destdir install, but good enough for Fedora
+builds.
+---
+ compiler/Makefile     | 2 +-
+ lib/Makefile          | 4 ++--
+ runtime/Makefile.unix | 8 ++++----
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/compiler/Makefile b/compiler/Makefile
+index d756fba..2e402bc 100644
+--- a/compiler/Makefile
++++ b/compiler/Makefile
+@@ -82,7 +82,7 @@ beforedepend:: linenum.ml
+ 
+ # Install
+ install:
+-	cp $(PROG) $(BINDIR)
++	cp $(PROG) $(DESTDIR)$(BINDIR)
+ 
+ # Clean up
+ clean::
+diff --git a/lib/Makefile b/lib/Makefile
+index 5048be6..181be01 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -29,11 +29,11 @@ $(NATIVELIB): $(NATIVEOBJS)
+ install: install-byte $(if $(NATIVELIB),install-opt)
+ 
+ install-byte:
+-	cp $(INTERFACES) $(BYTELIB) $(OCAMLLIB)
++	cp $(INTERFACES) $(BYTELIB) $(DESTDIR)$(OCAMLLIB)
+ 
+ install-opt:
+-	cp $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(OCAMLLIB)
+-	cd $(OCAMLLIB); $(RANLIB) $(NATIVELIB:.cmxa=.$(LIBEXT))
++	cp $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(DESTDIR)$(OCAMLLIB)
++	cd $(DESTDIR)$(OCAMLLIB); $(RANLIB) $(NATIVELIB:.cmxa=.$(LIBEXT))
+ 
+ .SUFFIXES: .mli .ml .cmi .cmo .cmx
+ 
+diff --git a/runtime/Makefile.unix b/runtime/Makefile.unix
+index d51d6bb..6ee4812 100644
+--- a/runtime/Makefile.unix
++++ b/runtime/Makefile.unix
+@@ -26,10 +26,10 @@ dllcamlidl.so libcamlidl.a: $(OBJS)
+ #	$(RANLIB) $@
+ 
+ install:
+-	cp camlidlruntime.h $(OCAMLLIB)/caml/camlidlruntime.h
+-	cp libcamlidl.a $(OCAMLLIB)/libcamlidl.a
+-	cp dllcamlidl.so $(OCAMLLIB)/stublibs/dllcamlidl.so
+-	cd $(OCAMLLIB); $(RANLIB) libcamlidl.a
++	cp camlidlruntime.h $(DESTDIR)$(OCAMLLIB)/caml/camlidlruntime.h
++	cp libcamlidl.a $(DESTDIR)$(OCAMLLIB)/libcamlidl.a
++	cp dllcamlidl.so $(DESTDIR)$(OCAMLLIB)/stublibs/dllcamlidl.so
++	cd $(DESTDIR)$(OCAMLLIB); $(RANLIB) libcamlidl.a
+ 
+ clean:
+ 	rm -f *.a *.o *.so
+-- 
+2.26.2
+
