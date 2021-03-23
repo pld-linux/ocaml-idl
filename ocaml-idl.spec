@@ -13,7 +13,7 @@ Summary(pl.UTF-8):	CamlIDL - generator kodu zaślepek oraz wiązania COM dla OCa
 %define	shortversion	%(echo %{version} | tr -d .)
 Name:		ocaml-idl
 Version:	1.09
-Release:	2
+Release:	3
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
 Source0:	https://github.com/xavierleroy/camlidl/archive/camlidl%{shortversion}/camlidl-%{version}.tar.gz
@@ -142,6 +142,7 @@ archive(native) = "com.cmxa"
 linkopts = ""
 EOF
 ln -sr $RPM_BUILD_ROOT%{_libdir}/ocaml/{idl,site-lib/camlidl}/META
+ln -sr $RPM_BUILD_ROOT%{_libdir}/ocaml/{idl,camlidl}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
