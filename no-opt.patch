@@ -1,8 +1,9 @@
---- camlidl-1.05/lib/Makefile~	2002-04-22 11:50:47.000000000 +0000
-+++ camlidl-1.05/lib/Makefile	2015-04-06 11:32:04.970899900 +0000
-@@ -28,8 +28,13 @@
+diff -urNp -x '*.orig' camlidl-camlidl109.org/lib/Makefile camlidl-camlidl109/lib/Makefile
+--- camlidl-camlidl109.org/lib/Makefile	2020-05-22 16:45:29.000000000 +0200
++++ camlidl-camlidl109/lib/Makefile	2021-03-23 21:48:44.434965400 +0100
+@@ -28,8 +28,13 @@ $(BYTELIB): $(BYTEOBJS)
  $(NATIVELIB): $(NATIVEOBJS)
- 	$(OCAMLOPT) -a -o $(NATIVELIB) $(NATIVEOBJS)
+ 	$(OCAMLOPT) -a -o $(NATIVELIB) -cclib -lcamlidl $(NATIVEOBJS)
  
 -install:
 -	cp $(INTERFACES) $(BYTELIB) $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(OCAMLLIB)

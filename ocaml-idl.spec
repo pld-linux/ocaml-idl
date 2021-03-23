@@ -10,17 +10,18 @@
 %define		ocaml_ver	1:3.09.2
 Summary:	CamlIDL - stub code generator and COM binding for OCaml
 Summary(pl.UTF-8):	CamlIDL - generator kodu zaślepek oraz wiązania COM dla OCamla
+%define	shortversion	%(echo %{version} | tr -d .)
 Name:		ocaml-idl
-Version:	1.05
-Release:	14
+Version:	1.09
+Release:	1
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
-Source0:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.tar.gz
-# Source0-md5:	4cfb863bc3cbdc1af2502042c45cc675
-Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-%{version}.doc.html.tar.gz
+Source0:	https://github.com/xavierleroy/camlidl/archive/camlidl%{shortversion}/camlidl-%{version}.tar.gz
+# Source0-md5:	50a7348c14ce7448a35efa96b98018af
+Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-1.05.doc.html.tar.gz
 # Source1-md5:	b7c7dad3ba62ddcc0f687bdebe295126
 Patch0:		no-opt.patch
-Patch1:		array-stdlib.patch
+Patch1:		DESTDIR.patch
 URL:		http://caml.inria.fr/pub/old_caml_site/camlidl/
 BuildRequires:	ocaml >= %{ocaml_ver}
 Obsoletes:	ocaml-camlidl < 1.05-3
@@ -54,7 +55,7 @@ Summary:	IDL binding for OCaml - development part
 Summary(pl.UTF-8):	Wiązania IDL dla OCamla - cześć programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-%requires_eq	ocaml
+%requires_eq ocaml
 
 %description devel
 Camlidl is a stub code generator for Objective Caml. It generates stub
@@ -79,7 +80,7 @@ Pakiet ten zawiera pliki niezbędne do tworzenia programów używających
 tej biblioteki.
 
 %prep
-%setup -q -a 1 -n camlidl-%{version}
+%setup -q -a 1 -n camlidl-camlidl%{shortversion}
 %patch0 -p1
 %patch1 -p1
 
@@ -111,13 +112,14 @@ ocamlmklib -o com lib/*.cm[xo] runtime/*.o
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/ocaml/idl,%{_includedir}/caml}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/ocaml/{stublibs,idl},%{_includedir}/caml}
 ln -sf ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 
 %{__make} install \
-	%{!?with_ocaml_opt:NATIVELIB=""} \
-	BINDIR=$RPM_BUILD_ROOT%{_bindir} \
-	OCAMLLIB=$RPM_BUILD_ROOT%{_libdir}/ocaml
+	DESTDIR=$RPM_BUILD_ROOT \
+	BINDIR=%{_bindir} \
+	OCAMLLIB=%{_libdir}/ocaml \
+	%{!?with_ocaml_opt:NATIVELIB=""}
 
 # fix install to subdir
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma,a%{?with_ocaml_opt:,cmxa}},idl}
@@ -157,6 +159,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with ocaml_opt}
 %{_libdir}/ocaml/idl/com.a
 %{_libdir}/ocaml/idl/com.cmxa
+%{_libdir}/ocaml/stublibs/dllcamlidl.so
 %endif
 %{_libdir}/ocaml/idl/libcamlidl.a
 %{_libdir}/ocaml/site-lib/camlidl
