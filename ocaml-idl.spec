@@ -156,6 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc htmlman LICENSE README Changes
 %attr(755,root,root) %{_bindir}/camlidl
 %dir %{_libdir}/ocaml/idl
+%{_libdir}/ocaml/camlidl
 %{_libdir}/ocaml/idl/META
 %{_libdir}/ocaml/idl/com.cma
 %{_libdir}/ocaml/idl/com.cmi
