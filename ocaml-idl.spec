@@ -159,10 +159,10 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with ocaml_opt}
 %{_libdir}/ocaml/idl/com.a
 %{_libdir}/ocaml/idl/com.cmxa
-%{_libdir}/ocaml/stublibs/dllcamlidl.so
 %endif
 %{_libdir}/ocaml/idl/libcamlidl.a
 %{_libdir}/ocaml/site-lib/camlidl
+%{_libdir}/ocaml/stublibs/dllcamlidl.so
 %{_libdir}/ocaml/caml
 %{_includedir}/caml/camlidlruntime.h
 %{_examplesdir}/%{name}-%{version}
