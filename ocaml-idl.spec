@@ -13,7 +13,7 @@ Summary(pl.UTF-8):	CamlIDL - generator kodu zaślepek oraz wiązania COM dla OCa
 %define	shortversion	%(echo %{version} | tr -d .)
 Name:		ocaml-idl
 Version:	1.09
-Release:	3
+Release:	4
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
 Source0:	https://github.com/xavierleroy/camlidl/archive/camlidl%{shortversion}/camlidl-%{version}.tar.gz
@@ -132,7 +132,6 @@ cp -a tests/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 # remove Windows examples
 %{__rm} -r $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/{comp,dispatch}
 
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/camlidl
 cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/idl/META <<EOF
 requires = ""
 version = "%{version}"
@@ -141,7 +140,6 @@ archive(byte) = "com.cma"
 archive(native) = "com.cmxa"
 linkopts = ""
 EOF
-ln -sr $RPM_BUILD_ROOT%{_libdir}/ocaml/{idl,site-lib/camlidl}/META
 ln -sr $RPM_BUILD_ROOT%{_libdir}/ocaml/{idl,camlidl}
 
 %clean
@@ -165,7 +163,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/ocaml/idl/com.cmxa
 %endif
 %{_libdir}/ocaml/idl/libcamlidl.a
-%{_libdir}/ocaml/site-lib/camlidl
 %{_libdir}/ocaml/stublibs/dllcamlidl.so
 %{_libdir}/ocaml/caml
 %{_includedir}/caml/camlidlruntime.h
