@@ -1,13 +1,13 @@
+# TODO: build current htmlman (make -C doc htmlman/index.html, requires hevea and hacha)
 #
 # Conditional build:
-%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+%bcond_without	ocaml_opt	# native optimized binaries (bytecode is always built)
 
 # not yet available on x32 (ocaml 4.02.1), update when upstream will support it
-%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
+%ifnarch %{ix86} %{x8664} %{arm} aarch64 ppc sparc sparcv9
 %undefine	with_ocaml_opt
 %endif
 
-%define		ocaml_ver	1:3.09.2
 Summary:	CamlIDL - stub code generator and COM binding for OCaml
 Summary(pl.UTF-8):	CamlIDL - generator kodu zaślepek oraz wiązania COM dla OCamla
 %define	shortversion	%(echo %{version} | tr -d .)
@@ -16,14 +16,15 @@ Version:	1.09
 Release:	4
 License:	QPL v1.0 (compiler), LGPL v2 (library)
 Group:		Libraries
+#Source0Download: https://github.com/xavierleroy/camlidl/releases
 Source0:	https://github.com/xavierleroy/camlidl/archive/camlidl%{shortversion}/camlidl-%{version}.tar.gz
 # Source0-md5:	50a7348c14ce7448a35efa96b98018af
 Source1:	http://caml.inria.fr/distrib/bazar-ocaml/camlidl-1.05.doc.html.tar.gz
 # Source1-md5:	b7c7dad3ba62ddcc0f687bdebe295126
 Patch0:		no-opt.patch
 Patch1:		DESTDIR.patch
-URL:		http://caml.inria.fr/pub/old_caml_site/camlidl/
-BuildRequires:	ocaml >= %{ocaml_ver}
+URL:		https://github.com/xavierleroy/camlidl
+BuildRequires:	ocaml >= 1:4.03
 Obsoletes:	ocaml-camlidl < 1.05-3
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -55,7 +56,7 @@ Summary:	IDL binding for OCaml - development part
 Summary(pl.UTF-8):	Wiązania IDL dla OCamla - cześć programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-%requires_eq ocaml
+%requires_eq	ocaml
 
 %description devel
 Camlidl is a stub code generator for Objective Caml. It generates stub
@@ -86,11 +87,6 @@ tej biblioteki.
 
 ln -s Makefile.unix config/Makefile
 
-# NOTE: make opt to produce camlidl.opt won't work here, there is no such
-# target even. That's bacause there is array.ml module in camlidl so
-# it produces array.o and array.o is also in standard library. And C linker
-# chokes.
-
 %build
 %{__make} -j1 -C compiler \
 	CPP="%{__cc} -E -x c" \
@@ -108,11 +104,13 @@ ln -s Makefile.unix config/Makefile
 	CPP="%{__cc} -E -x c" \
 	CFLAGS="%{rpmcflags} -fPIC"
 
+# create dllcom.so (is it still required?)
 ocamlmklib -o com lib/*.cm[xo] runtime/*.o
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/ocaml/{stublibs,idl},%{_includedir}/caml}
+# header is installed via this symlink
 ln -sf ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 
 %{__make} install \
@@ -142,28 +140,32 @@ linkopts = ""
 EOF
 ln -sr $RPM_BUILD_ROOT%{_libdir}/ocaml/{idl,camlidl}
 
+# symlink belongs to ocaml package
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc Changes LICENSE README
+%dir %{_libdir}/ocaml/idl
+%{_libdir}/ocaml/idl/META
+%{_libdir}/ocaml/idl/com.cma
+%attr(755,root,root) %{_libdir}/ocaml/stublibs/dllcamlidl.so
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/dllcom.so
 
 %files devel
 %defattr(644,root,root,755)
-%doc htmlman LICENSE README Changes
+%doc htmlman
 %attr(755,root,root) %{_bindir}/camlidl
-%dir %{_libdir}/ocaml/idl
+# compat symlink
 %{_libdir}/ocaml/camlidl
-%{_libdir}/ocaml/idl/META
-%{_libdir}/ocaml/idl/com.cma
 %{_libdir}/ocaml/idl/com.cmi
 %if %{with ocaml_opt}
 %{_libdir}/ocaml/idl/com.a
 %{_libdir}/ocaml/idl/com.cmxa
 %endif
 %{_libdir}/ocaml/idl/libcamlidl.a
-%{_libdir}/ocaml/stublibs/dllcamlidl.so
-%{_libdir}/ocaml/caml
 %{_includedir}/caml/camlidlruntime.h
 %{_examplesdir}/%{name}-%{version}
