@@ -104,9 +104,6 @@ ln -s Makefile.unix config/Makefile
 	CPP="%{__cc} -E -x c" \
 	CFLAGS="%{rpmcflags} -fPIC"
 
-# create dllcom.so (is it still required?)
-ocamlmklib -o com lib/*.cm[xo] runtime/*.o
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/ocaml/{stublibs,idl},%{_includedir}/caml}
@@ -121,9 +118,6 @@ ln -sf ../../include/caml $RPM_BUILD_ROOT%{_libdir}/ocaml/caml
 
 # fix install to subdir
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/ocaml/{*.{cm[ix],cma,a%{?with_ocaml_opt:,cmxa}},idl}
-
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
-install -p dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -a tests/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
@@ -153,7 +147,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/ocaml/idl/META
 %{_libdir}/ocaml/idl/com.cma
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/dllcamlidl.so
-%attr(755,root,root) %{_libdir}/ocaml/stublibs/dllcom.so
 
 %files devel
 %defattr(644,root,root,755)
