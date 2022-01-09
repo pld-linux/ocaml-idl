@@ -53,7 +53,7 @@ używających tej biblioteki.
 
 %package devel
 Summary:	IDL binding for OCaml - development part
-Summary(pl.UTF-8):	Wiązania IDL dla OCamla - cześć programistyczna
+Summary(pl.UTF-8):	Wiązania IDL dla OCamla - część programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %requires_eq	ocaml
